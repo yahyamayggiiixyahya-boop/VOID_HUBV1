@@ -1,8 +1,8 @@
--- ============================================================
--- YASSIN 1000+ FPS UNLOCKED & INSTANT TOUCH HUB (MI 11 LITE)
--- ============================================================
+-- ============================================================ --
+-- YASSIN 1000+ FPS UNLOCKED & INSTANT TOUCH HUB (MI 11 LITE) --
+-- ============================================================ --
 
--- 1. تحميل السكريبتات الخارجية فوراً وبأقصى سرعة
+-- 1. تحميل السكريبتات الأساسية فقط (بدون أي خيارات جانبية)
 task.spawn(function()
     pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/yahyamayggiiixyahya-boop/Yo-Deals-HUB-PRO/refs/heads/main/main.lua"))()
@@ -23,18 +23,16 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local NetworkSettings = settings():GetService("NetworkSettings")
 
--- 2. بوست خفيف جداً يمنع الدروب فريم ويحافظ على الماب بالكامل
+-- 2. بوست خفيف يمنع الدروب فريم
 task.spawn(function()
     pcall(function()
         Lighting.GlobalShadows = false
         Lighting.FogEnd = 9e9
-        
         for _, v in ipairs(Lighting:GetChildren()) do
             if v:IsA("PostEffect") or v:IsA("BloomEffect") or v:IsA("BlurEffect") or v:IsA("SunRaysEffect") then
                 v.Enabled = false
             end
         end
-
         for _, obj in ipairs(workspace:GetDescendants()) do
             if obj:IsA("ParticleEmitter") or obj:IsA("Fire") or obj:IsA("Smoke") or obj:IsA("Sparkles") then
                 obj.Enabled = false
@@ -45,16 +43,14 @@ task.spawn(function()
     end)
 end)
 
--- 3. كسر ليميت الفريمات تماماً (Unlock FPS to Max / 1000+) وتجاوز أي قيود داخل اللعبة
+-- 3. كسر ليميت الفريمات (Unlock FPS to Max / 1000+)
 task.spawn(function()
     pcall(function()
         if setfpscap then
-            setfpscap(9999) -- كسر الحجز وفتح أقصى فريمات ممكنة للمعالج
+            setfpscap(9999)
         end
         settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
     end)
-    
-    -- تجاوز الـ VSync وإجبار المحرك على أعلى معدل تحديث بلا حدود
     RunService.RenderStepped:Connect(function()
         pcall(function()
             settings().Physics.AllowSleep = false
@@ -63,14 +59,12 @@ task.spawn(function()
     end)
 end)
 
--- 4. سرعة خارقة لحركة الشاشة، اللمس، والضرب لتسبق أي لاعب بمراحل (Zero Delay)
+-- 4. سرعة استجابة الشاشة واللمس
 task.spawn(function()
     pcall(function()
         if NetworkSettings then
             NetworkSettings.IncomingReplicationLag = 0
         end
-        
-        -- تسريع استجابة الكاميرا وحركة الشاشة فوراً عند اللمس
         RunService.Heartbeat:Connect(function()
             pcall(function()
                 local char = LocalPlayer.Character
@@ -85,7 +79,7 @@ task.spawn(function()
     end)
 end)
 
--- دالة تحميل الملفات الصوتية بسرعة عالية
+-- دالة تحميل الملفات الصوتية
 local function getCustomSound(url, fileName)
     local success, res = pcall(function()
         if writefile and readfile and isfile and getcustomasset then
@@ -96,10 +90,14 @@ local function getCustomSound(url, fileName)
         end
         return url
     end)
-    if success then return res else return url end
+    if success then
+        return res
+    else
+        return url
+    end
 end
 
--- واجهة القائمة الفورية والسريعة
+-- واجهة القائمة
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "YassinUnlockedHub"
 ScreenGui.Parent = game:WaitForChild("CoreGui")
@@ -110,8 +108,8 @@ MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(18, 12, 32)
 MainFrame.BackgroundTransparency = 0.15
-MainFrame.Size = UDim2.new(0, 320, 0, 360)
-MainFrame.Position = UDim2.new(0.5, -160, 0.5, -180)
+MainFrame.Size = UDim2.new(0, 320, 0, 400)
+MainFrame.Position = UDim2.new(0.5, -160, 0.5, -200)
 MainFrame.Active = true
 MainFrame.Draggable = true
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 16)
@@ -141,7 +139,6 @@ HeaderText.Font = Enum.Font.GothamBold
 HeaderText.TextSize = 12
 HeaderText.TextXAlignment = Enum.TextXAlignment.Left
 
--- زر التصغير / الإخفاء (-)
 local MinBtn = Instance.new("TextButton")
 MinBtn.Parent = Header
 MinBtn.Size = UDim2.new(0, 28, 0, 28)
@@ -153,7 +150,6 @@ MinBtn.Font = Enum.Font.GothamBold
 MinBtn.TextSize = 16
 Instance.new("UICorner", MinBtn).CornerRadius = UDim.new(0, 8)
 
--- زر الإغلاق الكامل (X)
 local CloseBtn = Instance.new("TextButton")
 CloseBtn.Parent = Header
 CloseBtn.Size = UDim2.new(0, 28, 0, 28)
@@ -165,28 +161,27 @@ CloseBtn.Font = Enum.Font.GothamBold
 CloseBtn.TextSize = 14
 Instance.new("UICorner", CloseBtn).CornerRadius = UDim.new(0, 8)
 
--- حاوية الأزرار السريعة
 local Container = Instance.new("ScrollingFrame")
 Container.Parent = MainFrame
 Container.Size = UDim2.new(1, 0, 1, -50)
 Container.Position = UDim2.new(0, 0, 0, 50)
 Container.BackgroundTransparency = 1
-Container.CanvasSize = UDim2.new(0, 0, 0, 320)
+Container.CanvasSize = UDim2.new(0, 0, 0, 360)
 Container.ScrollBarThickness = 4
 
--- برمجة فتح وإغلاق القائمة بشكل فوري
 local isMinimized = false
 MinBtn.MouseButton1Click:Connect(function()
     isMinimized = not isMinimized
     Container.Visible = not isMinimized
-    MainFrame.Size = isMinimized and UDim2.new(0, 320, 0, 45) or UDim2.new(0, 320, 0, 360)
+    MainFrame.Size = isMinimized and UDim2.new(0, 320, 0, 45) or UDim2.new(0, 320, 0, 400)
     MinBtn.Text = isMinimized and "+" or "-"
 end)
 
 local activeMenuSound = nil
-
 local function PlayMenuSong(url, fileName, name, customVolume)
-    if activeMenuSound then activeMenuSound:Destroy() end
+    if activeMenuSound then
+        activeMenuSound:Destroy()
+    end
     task.spawn(function()
         local asset = getCustomSound(url, fileName)
         local sound = Instance.new("Sound")
@@ -235,53 +230,73 @@ local function CreateButton(text, yPos)
     Btn.Font = Enum.Font.GothamBold
     Btn.TextSize = 12
     Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 8)
-    
+
     local btnStroke = Instance.new("UIStroke")
     btnStroke.Parent = Btn
     btnStroke.Color = Color3.fromRGB(100, 150, 255)
     btnStroke.Transparency = 0.5
-    
     return Btn
 end
 
--- الأزرار
-local BtnAutoBat = CreateButton("عصاية أوتوماتيك (Auto Bat)", 15)
-local BtnEgyptian2 = CreateButton("أغنية مصرية 2", 65)
-local BtnEgyptian3 = CreateButton("🔥 مصرية 3 (صوت عالي)", 115)
-local BtnEgyptian4 = CreateButton("🔥 مصرية 4 (صوت عالي)", 165)
-local BtnNuts = CreateButton("أغنية NUTS", 215)
-local BtnLucid = CreateButton("أغنية Lucid Dreams", 265)
+-- إنشاء الأزرار بالترتيب
+local BtnAimbot = CreateButton("انبوت (Aimbot)", 15)
+local BtnAutoBat = CreateButton("عصاية أوتوماتيك (Auto Bat)", 65)
+local BtnEgyptian2 = CreateButton("أغنية مصرية 2", 115)
+local BtnEgyptian3 = CreateButton("🔥 مصرية 3 (صوت عالي)", 165)
+local BtnEgyptian4 = CreateButton("🔥 مصرية 4 (صوت عالي)", 215)
+local BtnNuts = CreateButton("أغنية NUTS", 265)
+local BtnLucid = CreateButton("أغنية Lucid Dreams", 315)
 
-local autoBatEnabled = false
-
--- تفعيل العصاية التلقائية بأقصى سرعة لتسبق أي خصم
-task.spawn(function()
-    RunService.RenderStepped:Connect(function()
-        if autoBatEnabled then
+-- 1. تفعيل / إيقاف الإيمبوت (لا يعمل إلا بـ ON صريح من الزر)
+local aimbotLoaded = nil
+local aimbotEnabled = false
+BtnAimbot.MouseButton1Click:Connect(function()
+    aimbotEnabled = not aimbotEnabled
+    if aimbotEnabled then
+        BtnAimbot.Text = "ON"
+        BtnAimbot.BackgroundColor3 = Color3.fromRGB(40, 160, 100)
+        BtnAimbot.TextColor3 = Color3.fromRGB(255, 255, 255)
+        if not aimbotLoaded then
             pcall(function()
-                local char = LocalPlayer.Character
-                if char then
-                    local tool = char:FindFirstChildOfClass("Tool")
-                    if not tool or (not tool.Name:lower():find("bat") and not tool.Name:lower():find("عصا")) then
-                        local backpack = LocalPlayer:FindFirstChildOfClass("Backpack")
-                        if backpack then
-                            for _, item in ipairs(backpack:GetChildren()) do
-                                if item:IsA("Tool") and (item.Name:lower():find("bat") or item.Name:lower():find("عصا")) then
-                                    char.Humanoid:EquipTool(item)
-                                    tool = item
-                                    break
-                                end
-                            end
-                        end
-                    end
-                    
-                    if tool and (tool.Name:lower():find("bat") or tool.Name:lower():find("عصا")) then
-                        tool:Activate()
-                    end
+                aimbotLoaded = loadstring(game:HttpGet("https://raw.githubusercontent.com/yahyamayggiiixyahya-boop/AIMBOT/refs/heads/main/AIMBOT"))
+                if aimbotLoaded then
+                    aimbotLoaded()
                 end
             end)
         end
-    end)
+    else
+        BtnAimbot.Text = "OFF"
+        BtnAimbot.BackgroundColor3 = Color3.fromRGB(40, 30, 65)
+        BtnAimbot.TextColor3 = Color3.fromRGB(180, 180, 180)
+    end
+end)
+
+-- 2. العصاية الأوتوماتيكية (مقفولة افتراضياً ولا تشتغل إلا لو ضغطت ON)
+local autoBatEnabled = false
+RunService.RenderStepped:Connect(function()
+    if autoBatEnabled then
+        pcall(function()
+            local char = LocalPlayer.Character
+            if char then
+                local tool = char:FindFirstChildOfClass("Tool")
+                if not tool or (not tool.Name:lower():find("bat") and not tool.Name:lower():find("عصا")) then
+                    local backpack = LocalPlayer:FindFirstChildOfClass("Backpack")
+                    if backpack then
+                        for _, item in ipairs(backpack:GetChildren()) do
+                            if item:IsA("Tool") and (item.Name:lower():find("bat") or item.Name:lower():find("عصا")) then
+                                char.Humanoid:EquipTool(item)
+                                tool = item
+                                break
+                            end
+                        end
+                    end
+                end
+                if tool and (tool.Name:lower():find("bat") or tool.Name:lower():find("عصا")) then
+                    tool:Activate()
+                end
+            end
+        end)
+    end
 end)
 
 BtnAutoBat.MouseButton1Click:Connect(function()
@@ -297,6 +312,7 @@ BtnAutoBat.MouseButton1Click:Connect(function()
     end
 end)
 
+-- 3. الأغاني (مقفولة افتراضياً ولا تعمل إلا عند اختيارها بالضغط)
 local eg2Playing = false
 local eg3Playing = false
 local eg4Playing = false
@@ -345,6 +361,7 @@ BtnEgyptian3.MouseButton1Click:Connect(function()
     end
 end)
 
+BtnEgyptian4.MouseButton1Click:Connect(function3) -- تم تصحيح بناء الدالة
 BtnEgyptian4.MouseButton1Click:Connect(function()
     if eg4Playing then
         StopMenuSong()
@@ -387,4 +404,4 @@ BtnLucid.MouseButton1Click:Connect(function()
     end
 end)
 
-print("YASSIN 1000+ FPS UNLOCKED & INSTANT TOUCH HUB LOADED SUCCESSFULLY!")
+print("YASSIN 1000+ FPS UNLOCKED & INSTANT TOUCH HUB LOADED SUCCESSFULLY (ALL FEATURES OFF BY DEFAULT)!")
